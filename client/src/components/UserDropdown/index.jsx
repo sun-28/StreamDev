@@ -2,10 +2,10 @@ import { useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import DropdownDivider from "./DropdownDivider";
 import DropdownButton from "./DropdownButton";
-
+import { useNavigate } from "react-router-dom";
 function UserDropdown({ dropdownRef }) {
   const { isDarkTheme, toggleTheme } = useContext(AppContext);
-
+  let navigate = useNavigate();
   return (
     <div
       ref={dropdownRef}
@@ -45,7 +45,9 @@ function UserDropdown({ dropdownRef }) {
             </g>
           </svg>
         </DropdownButton>
-        
+        <div onClick={()=> {
+          navigate('/stream/dashboard')
+        }}>
         <DropdownButton label="Creator Dashboard">
           <svg
             width="20px"
@@ -55,17 +57,18 @@ function UserDropdown({ dropdownRef }) {
             viewBox="0 0 20 20"
             x="0px"
             y="0px"
-          >
+            >
             <g>
               <path d="M7 10h2v4H7v-4zM13 6h-2v8h2V6z"></path>
               <path
                 clipRule="evenodd"
                 fillRule="evenodd"
                 d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm12 2H4v12h12V4z"
-              ></path>
+                ></path>
             </g>
           </svg>
         </DropdownButton>
+                </div>
       </div>
 
       <DropdownDivider />

@@ -26,24 +26,24 @@ function App() {
   }
 
   return (
+          <Router>
     <div className="min-h-screen bg-body-bg">
       <NavBar />
       <div className="flex h-[calc(100vh-50px)]">
         <SideBar />
         <div className="flex-1">
-          <Router>
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/stream/:meetingId" element={<Stream />} />
               <Route path="/stream/create" element={<CreateStream/>} />
-              <Route path="/stream/Dashboard" element={<Dashboard/>} />
+              <Route path="/stream/dashboard" element={<Dashboard/>} />
               <Route path="/stream/creator/:meetingId" element={<SpeakerScreenContainer/>} />
               <Route path="/auth" element={<Auth />} />
             </Routes>
-          </Router>
         </div>
       </div>
     </div>
+          </Router>
   );
 }
 
