@@ -1,7 +1,36 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 
 const Auth = () => {
   const [auth, setauth] = useState('login')
+  const [formData, setFormData] = useState({username: "",password: "",channelname: ""});
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if(auth=='login'){
+        const {data} = axios.post('http://localhost:5000/auth/login',{id:formData.username,pw:formData.password});
+        if(data.success){
+          localStorage.setItem('dev-token', data.token)
+        }
+        else{
+          alert('err')
+        }
+    }
+    else{
+      const {data} = axios.post('http://localhost:5000/auth/signup',formData);
+      if(data.success){
+        setauth('login');
+      }
+      else{
+        alert('err')
+      }
+    }
+    
+  }
   return (
     <div className='absolute bg-body-bg left-0 top-0 w-screen h-screen'>
       <div className='w-screen h-screen flex justify-center items-center'>
@@ -16,17 +45,16 @@ const Auth = () => {
           {auth === 'login'?
           <>
           <p class="text-center text-3xl mb-4 text-green">Login</p>
-          <input type='text' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Username"/>
-          <input type='password' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Password"/>
+          <input name='username' value={formData.username} onChange={handleChange} type='text' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Username"/>
+          <input name='password' value={formData.password} onChange={handleChange} type='password' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Password"/>
           <button class="mt-4 inline-block cursor-pointer rounded-md bg-gray-700 px-4 py-3.5 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 active:scale-95">Login</button>
           </>
           :
           <>
           <p class="text-center text-3xl text-green mb-4">Sign Up</p>
-          <input type='text' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Username"/>
-          <input type='text' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Channel Name"/>
-          <input  class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Password"/>
-          <input class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Confirm password"/>
+          <input name='username' value={formData.username} onChange={handleChange} type='text' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Username"/>
+          <input name='channelname' value={formData.channelname} onChange={handleChange} type='text' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Channel Name"/>
+          <input name='password' value={formData.password} onChange={handleChange} class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Password"/>
           <button class="mt-4 inline-block cursor-pointer rounded-md bg-gray-700 px-4 py-3.5 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 active:scale-95">Register</button>
           </>
           }
