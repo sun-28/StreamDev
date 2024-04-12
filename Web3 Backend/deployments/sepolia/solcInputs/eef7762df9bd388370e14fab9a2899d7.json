@@ -1,0 +1,36 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/StreamerDonation.sol": {
+      "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.24;\r\n\r\ncontract StreamerDonation {\r\n    mapping(address => uint256) public balances;\r\n\r\n    event Donation(address indexed from, address indexed to, uint256 amount);\r\n\r\n    function donateToStreamer(address streamer) external payable {\r\n        require(streamer != address(0), \"Invalid streamer address\");\r\n        require(msg.value > 0, \"Invalid donation amount\");\r\n\r\n        // Update streamer's balance\r\n        balances[streamer] += msg.value;\r\n\r\n        // Emit donation event\r\n        emit Donation(msg.sender, streamer, msg.value);\r\n    }\r\n\r\n    function withdraw() external {\r\n        uint256 balance = balances[msg.sender];\r\n        require(balance > 0, \"No balance to withdraw\");\r\n\r\n        // Transfer balance to the streamer\r\n        payable(msg.sender).transfer(balance);\r\n\r\n        // Update streamer's balance to zero\r\n        balances[msg.sender] = 0;\r\n    }\r\n\r\n    function getStreamerBalance() external view returns (uint256) {\r\n        return balances[msg.sender];\r\n    }\r\n}\r\n"
+    }
+  },
+  "settings": {
+    "evmVersion": "paris",
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
