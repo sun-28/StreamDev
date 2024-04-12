@@ -1,9 +1,12 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../../contexts/AppContext';
 
 const Auth = () => {
+const navigate = useNavigate();
+const { formData,setFormData } = useContext(AppContext);
   const [auth, setauth] = useState('login')
-  const [formData, setFormData] = useState({username: "",password: "",channelname: ""});
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -12,17 +15,21 @@ const Auth = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if(auth=='login'){
-        const {data} = axios.post('http://localhost:5000/auth/login',{id:formData.username,pw:formData.password});
+        const {data} = await axios.post('http://localhost:5000/auth/login',{id:formData.name,pw:formData.password});
+        console.log(data)
         if(data.success){
           localStorage.setItem('dev-token', data.token)
+          navigate('/');
         }
         else{
           alert('err')
         }
     }
     else{
-      const {data} = axios.post('http://localhost:5000/auth/signup',formData);
+      const {data} = await axios.post('http://localhost:5000/auth/signup',formData);
+      console.log(data)
       if(data.success){
+
         setauth('login');
       }
       else{
@@ -45,17 +52,18 @@ const Auth = () => {
           {auth === 'login'?
           <>
           <p class="text-center text-3xl mb-4 text-green">Login</p>
-          <input name='username' value={formData.username} onChange={handleChange} type='text' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Username"/>
+          <input name='name' value={formData.name} onChange={handleChange} type='text' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="name"/>
           <input name='password' value={formData.password} onChange={handleChange} type='password' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Password"/>
-          <button class="mt-4 inline-block cursor-pointer rounded-md bg-gray-700 px-4 py-3.5 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 active:scale-95">Login</button>
+          <button onClick={handleSubmit} class="mt-4 inline-block cursor-pointer rounded-md bg-gray-700 px-4 py-3.5 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 active:scale-95">Login</button>
           </>
           :
           <>
           <p class="text-center text-3xl text-green mb-4">Sign Up</p>
-          <input name='username' value={formData.username} onChange={handleChange} type='text' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Username"/>
-          <input name='channelname' value={formData.channelname} onChange={handleChange} type='text' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Channel Name"/>
+          <input name='name' value={formData.name} onChange={handleChange} type='text' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="name"/>
+          <input name='email' value={formData.email} onChange={handleChange} type='email' class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="email"/>
+          <input name='phone' value={formData.phone} onChange={handleChange} class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="phone"/>
           <input name='password' value={formData.password} onChange={handleChange} class="bg-slate-900 w-full rounded-lg border border-green px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800" placeholder="Password"/>
-          <button class="mt-4 inline-block cursor-pointer rounded-md bg-gray-700 px-4 py-3.5 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 active:scale-95">Register</button>
+          <button onClick={handleSubmit} class="mt-4 inline-block cursor-pointer rounded-md bg-gray-700 px-4 py-3.5 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 active:scale-95">Register</button>
           </>
           }
         </div>

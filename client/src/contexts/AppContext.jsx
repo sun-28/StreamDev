@@ -23,6 +23,8 @@ export default function AppProvider({ children }) {
 
   const toggleSidebar = () => setIsSidebarOpen((current) => !current);
 
+  const [formData, setFormData] = useState({name: "",password: "",email: "",phone:""});
+
   return (
     <AppContext.Provider
       value={{
@@ -30,6 +32,8 @@ export default function AppProvider({ children }) {
         toggleTheme,
         isSidebarOpen,
         toggleSidebar,
+        formData,
+        setFormData
       }}
     >
       {children}

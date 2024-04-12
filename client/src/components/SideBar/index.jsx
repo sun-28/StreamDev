@@ -1,12 +1,19 @@
-import { useContext } from "react";
-import { followedChannels, recommendedChannels } from "../../data";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import NavButton from "../NavBar/NavButton";
 import Channel from "./Channel";
+import axios from "axios";
 
-function SideBar() {
-  const { isSidebarOpen, toggleSidebar } = useContext(AppContext);
 
+function SideBar() {  
+const fetchChannels = async () => {
+  // const {data} = await axios.get('http://localhost:5000/channels')
+}
+  const [channels, setchannels] = useState([])
+  useEffect(() => {
+     fetchChannels()
+  }, [])
+  const { isSidebarOpen, toggleSidebar} = useContext(AppContext);
   return (
     <div
       className={`h-full bg-sidebar-bg overflow-y-scroll scrollbar ${
@@ -92,7 +99,7 @@ function SideBar() {
           </div>
         )}
 
-        {followedChannels.map((channel, index) => (
+        {channels.map((channel, index) => (
           <Channel key={index} channel={channel} expanded={isSidebarOpen} />
         ))}
 

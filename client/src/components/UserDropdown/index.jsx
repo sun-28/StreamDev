@@ -4,7 +4,7 @@ import DropdownDivider from "./DropdownDivider";
 import DropdownButton from "./DropdownButton";
 import { useNavigate } from "react-router-dom";
 function UserDropdown({ dropdownRef }) {
-  const { isDarkTheme, toggleTheme } = useContext(AppContext);
+  const { isDarkTheme, toggleTheme ,formData} = useContext(AppContext);
   let navigate = useNavigate();
   return (
     <div
@@ -17,10 +17,10 @@ function UserDropdown({ dropdownRef }) {
           href="/#"
           className="inline-block w-10 h-10 rounded-full overflow-hidden"
         >
-          <img src="" alt="User" />
+          <img src="" alt={formData.name} />
         </a>
         <span className="flex-1 pl-[10px] font-inter font-semibold text-[13px] mt-[-3px] laptop:mt-[-2px]">
-          Test
+          {formData.name}
         </span>
       </div>
       <DropdownDivider />
@@ -45,9 +45,7 @@ function UserDropdown({ dropdownRef }) {
             </g>
           </svg>
         </DropdownButton>
-        <div onClick={()=> {
-          navigate('/stream/dashboard')
-        }}>
+        <div>
         <DropdownButton label="Creator Dashboard">
           <svg
             width="20px"
