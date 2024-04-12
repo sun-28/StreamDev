@@ -1,8 +1,13 @@
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 import Main from "./components/Main";
+import Chat from "./components/Chat";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Stream from "./components/Stream/viewer";
 import Auth from "./components/Auth";
+import Dashboard from "./components/Stream/steamer";
+import CreateStream from "./components/Stream/steamer/CreateStream";
+import SpeakerScreenContainer from "./components/Rtmp/speakerScreen/SpeakerScreenContainer";
 
 function App() {
   const theme = localStorage.getItem("theme");
@@ -29,6 +34,10 @@ function App() {
           <Router>
             <Routes>
               <Route path="/" element={<Main />} />
+              <Route path="/stream/:meetingId" element={<Stream />} />
+              <Route path="/stream/create" element={<CreateStream/>} />
+              <Route path="/stream/Dashboard" element={<Dashboard/>} />
+              <Route path="/stream/creator/:meetingId" element={<SpeakerScreenContainer/>} />
               <Route path="/auth" element={<Auth />} />
             </Routes>
           </Router>

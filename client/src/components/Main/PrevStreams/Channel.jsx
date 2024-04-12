@@ -8,7 +8,7 @@ import { getViewersFormatted } from "../../../utils";
 export default function Channel({ channel }) {
   const {
     user,
-    viewers,
+    views,
     title,
     tags,
   } = channel;
@@ -17,7 +17,6 @@ export default function Channel({ channel }) {
     <div>
       <HoverEffect pb="56.36%">
         <div className="bg-black dark:bg-[#222] w-full h-full">
-          <LiveTag />
           <img
             className="h-full w-full object-cover"
             src='/'
@@ -28,7 +27,7 @@ export default function Channel({ channel }) {
             text-white text-[13px] bg-livechannel-viewer-count-bg rounded-[4px]
             select-none"
           >
-            {getViewersFormatted(viewers)} viewers
+            {getViewersFormatted(views)} views
           </span>
         </div>
       </HoverEffect>
