@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Web3 from "web3";
-
 import Chat from "../../Chat";
 import ViewerScreenContainer from "../../Rtmp/ViewerScreenContainer";
+import abi from "../constants/abi.json";
+import contractAddresses from "../constants/contractAddresses.json";
+
 
 const Stream = () => {
   const [web3, setWeb3] = useState(null);
