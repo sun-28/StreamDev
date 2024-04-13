@@ -17,6 +17,7 @@ const Code = ({hls}) => {
       }, 10000)
       useEffect(() => {
         socket.on('code',(code) => { 
+          console.log(code)
             setlcode(code);
         })
         return () => {
@@ -25,7 +26,7 @@ const Code = ({hls}) => {
       }, [lcode])
   return (
     <div className='flex justify-center items-center'>
-      <Editor height="50vh" theme="vs-dark" defaultLanguage="javascript" defaultValue=""  value={lcode}  options={{ readOnly: true }}/>;
+      <Editor height="50vh" theme="vs-dark" defaultLanguage="javascript" value={lcode}  options={{ readOnly: true }}/>;
     </div>
   )
 }

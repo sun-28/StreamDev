@@ -12,17 +12,17 @@ function MainContent() {
   const [prevstreams, setprevstreams] = useState([])
   const navigate = useNavigate();
   useEffect(() => {
-    if(!localStorage.getItem('dev-token')){
-        navigate('/auth')
-    }
-    else{
-      //fetch data for livestreams and prevstreams
-      // const {data} = axios.get('http://localhost:5000/streams')
-      // setlivestreams(data.livestreams)
-      // setprevstreams(data.prevstreams)
-      // const {data} = axios.get('http://localhost:5000/userData', {headers: {token: {localStorage.getItem('dev-token')}}}
-      // setformData(data)
-    }
+    // if(!localStorage.getItem('dev-token')){
+    //     navigate('/auth')
+    // }
+    // else{
+    //   //fetch data for livestreams and prevstreams
+    //   // const {data} = axios.get('http://localhost:5000/streams')
+    //   // setlivestreams(data.livestreams)
+    //   // setprevstreams(data.prevstreams)
+    //   // const {data} = axios.get('http://localhost:5000/userData', {headers: {token: {localStorage.getItem('dev-token')}}}
+    //   // setformData(data)
+    // }
   }, [])
  
   return (

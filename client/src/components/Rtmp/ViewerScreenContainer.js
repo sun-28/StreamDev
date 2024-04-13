@@ -18,7 +18,13 @@ const HLSPlayer = ({sethls}) => {
   const hlsPlaybackHlsUrl = useMemo(() => hlsUrls.playbackHlsUrl, [hlsUrls]);
 
   const handle = async (hlsPlaybackHlsUrl) => {
-    axios.post('http://localhost:5000/aiml/ml-transcript', {url:hlsPlaybackHlsUrl})
+    try {
+        console.log(hlsPlaybackHlsUrl)
+        const response=await axios.post('http://localhost:5000/aiml/ml-transcript', {url:hlsPlaybackHlsUrl})
+        console.log(response);
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   useEffect(() => {

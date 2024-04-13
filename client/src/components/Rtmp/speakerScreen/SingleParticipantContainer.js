@@ -53,7 +53,7 @@ const SingleParticipantContainer = ({ participantId }) => {
           light={false}
           controls={false}
           muted={true}
-          playing={true}
+          playing={"true"}
           url={videoStream}
           height={"100%"}
           width={"100%"}
