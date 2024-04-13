@@ -1,12 +1,10 @@
 import { useMeeting, Constants } from "@videosdk.live/react-sdk";
+import axios from "axios";
 import React, { useMemo } from "react";
 
 const MediaControlsContainer = () => {
   const { toggleMic, toggleWebcam, startHls, stopHls, hlsState, meetingId, enableScreenShare , disableScreenShare , startRecording , stopRecording} =
     useMeeting();
-
-  console.log(toggleMic, toggleWebcam, startHls, stopHls, hlsState, meetingId, enableScreenShare , disableScreenShare , startRecording , stopRecording)
-
   const { isHlsStarted, isHlsStopped, isHlsPlayable } = useMemo(
     () => ({
       isHlsStarted: hlsState === Constants.hlsEvents.HLS_STARTED,
@@ -23,6 +21,7 @@ const MediaControlsContainer = () => {
       startHls({ quality: "high" });
     }
   };
+
 
   return (
     <div className="flex flex-col items-center gap-3 text-white">
@@ -61,7 +60,7 @@ const MediaControlsContainer = () => {
       </button>
       <div className="flex flex-col justify-center items-center">
           <label htmlFor="hls" className="w-9 h-10 cursor-pointer flex flex-col items-center justify-center space-y-1.5">
-            <input onClick={() => _handleToggleHls()} id="hls" type="checkbox" className="hidden peer" />
+            <input onClick={() =>{ _handleToggleHls() }} id="hls" type="checkbox" className="hidden peer" />
             <div className="w-2/3 h-1.5 bg-green rounded-lg transition-all duration-300 origin-right peer-checked:w-full peer-checked:rotate-[-30deg] peer-checked:translate-y-[-5px]" />
             <div className="w-full h-1.5 bg-green rounded-lg transition-all duration-300 origin-center peer-checked:rotate-90 peer-checked:translate-x-4" />
             <div className="w-2/3 h-1.5 bg-green rounded-lg transition-all duration-300 origin-right peer-checked:w-full peer-checked:rotate-[30deg] peer-checked:translate-y-[5px]" />

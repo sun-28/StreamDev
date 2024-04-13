@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@monaco-editor/react": "^4.6.0",
     "@videosdk.live/react-sdk": "^0.1.86",
     "axios": "^1.6.8",
     "emoji-picker-react": "^4.9.2",

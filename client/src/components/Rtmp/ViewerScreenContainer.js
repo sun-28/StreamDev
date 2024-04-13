@@ -9,16 +9,21 @@ import Hls from "hls.js";
 
 import { useParams } from "react-router-dom";
 import { authToken } from "./api";
+import axios from "axios";
 
-const HLSPlayer = () => {
+const HLSPlayer = ({sethls}) => {
   const { hlsUrls, hlsState } = useMeeting();
-
   const playerRef = useRef(null);
 
   const hlsPlaybackHlsUrl = useMemo(() => hlsUrls.playbackHlsUrl, [hlsUrls]);
 
+  const handle = async (hlsPlaybackHlsUrl) => {
+    axios.post('http://localhost:5000/aiml/ml-transcript', {url:hlsPlaybackHlsUrl})
+  };
+
   useEffect(() => {
-    console.log(hlsPlaybackHlsUrl);
+    sethls(hlsPlaybackHlsUrl);
+    handle(hlsPlaybackHlsUrl);
     if (Hls.isSupported()) {
       const hls = new Hls({
         capLevelToPlayerSize: true,
@@ -27,7 +32,6 @@ const HLSPlayer = () => {
         autoStartLoad: true,
         defaultAudioCodec: "mp4a.40.2",
       });
-
       let player = document.querySelector("#hlsPlayer");
 
       hls.loadSource(hlsPlaybackHlsUrl);
@@ -53,7 +57,7 @@ const HLSPlayer = () => {
   );
 };
 
-const ViewerScreenContainer = () => {
+const ViewerScreenContainer = ({sethls}) => {
   const { meetingId } = useParams();
   return (
     <MeetingProvider
@@ -64,7 +68,7 @@ const ViewerScreenContainer = () => {
       <MeetingConsumer>
         {({ hlsState }) =>
           hlsState === Constants.hlsEvents.HLS_PLAYABLE ? (
-            <HLSPlayer />
+            <HLSPlayer sethls={sethls}/>
           ) : (
             <p>Waiting for host to start stream...</p>
           )

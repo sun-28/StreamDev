@@ -4,6 +4,7 @@ import Chat from "../../Chat";
 import ViewerScreenContainer from "../../Rtmp/ViewerScreenContainer";
 import abi from "../constants/abi.json";
 import contractAddresses from "../constants/contractAddresses.json";
+import Code from "./Code";
 
 
 const Stream = () => {
@@ -73,6 +74,8 @@ const Stream = () => {
       console.error("Donation failed:", error);
     }
   };
+  
+  const [hls, sethls] = useState('')
 
   const handleCheckBalance = async () => {
     if (!contract || !streamer) return;
@@ -90,11 +93,14 @@ const Stream = () => {
     <>
       <div className="flex flex-row w-full h-full m-0">
         <div className="w-3/4 aspect-video m-12">
-          <ViewerScreenContainer />
+          <ViewerScreenContainer sethls={sethls} />
         </div>
         <div className="w-1/4 mr-5 aspect-auto">
           <Chat id='11'/>
         </div>
+      </div>
+      <div>
+        <Code hls={hls}/>
       </div>
     </>
   );
