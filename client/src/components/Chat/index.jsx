@@ -1,13 +1,27 @@
-import React , {useState} from "react"
+import React , {useEffect, useRef, useState} from "react"
 import ChatMessageBox from "./ChatMessageBox"
 import SendMessageForm from "./SendMessageForm"
+import { io } from "socket.io-client";
 
-const Chat = () => {
+const Chat = ({id}) => {
+    const socket = io('localhost:8080');
     const [msg, setsmsg] = useState([])
     const send = (message) => {
-        setsmsg(prev => [...prev, {id: prev.length, author: {username: "User"}, content: message}])
-        console.log(msg)
+        let cid = id;
+        socket.emit('message',cid,message) 
     }
+    
+      useEffect(() => {
+        socket.on('message',(cid,message) => { 
+          if (cid == id) 
+            setsmsg(prev => [...prev, {id: prev.length, author: {username: "Streamer"}, content: message}])
+        })
+        return () => {
+          socket.disconnect()
+        }
+      }, [msg])
+        
+    
   return (
     <div className="grid mt-12 place-items-center">        
         <div className="relative w-full px-4 py-3 rounded-lg bg-slate-900 opacity-80">

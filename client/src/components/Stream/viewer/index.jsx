@@ -93,7 +93,7 @@ const Stream = () => {
           <ViewerScreenContainer />
         </div>
         <div className="w-1/4 mr-5 aspect-auto">
-          <Chat />
+          <Chat id='11'/>
         </div>
       </div>
     </>
