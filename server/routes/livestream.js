@@ -4,7 +4,6 @@ const Checkuser = require("../middleware/CheckUser");
 const Livestream = require("../models/Livestreams");
 const Users = require("../models/Users");
 const date = new Date("<YYYY-mm-ddTHH:MM:ss>");
-const rediss=require('../redis');
 const Livestreams = require("../models/Livestreams");
 
 app.post("/create", Checkuser, async (req, res) => {
